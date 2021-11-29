@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface; //clase que nos permitira hashear la Password
+
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ class RegistroController extends AbstractController
 {
     #[Route('/registro', name: 'registro')]
 
-    public function index(Request $request)
+    public function index(Request $request, UserPasswordHasherInterface $passwordHasher)
     {
 
         $user = new User();
@@ -25,11 +27,15 @@ class RegistroController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $user->setBaneado(false);
-            $user->setRoles(['ROLE_USER']);
+            
+            $user->setPassword($passwordHasher->hashPassword(
+                $user, 
+                $form['password']->getData()
+            ));
             $em->persist($user);
             $em->flush();
-            $this->addFlash('exito', 'Se ha registrado exitosamente');
+
+            $this->addFlash('exito', User::REGISTRO_EXITOSO);
             return $this->redirectToRoute('registro'); 
         }
 

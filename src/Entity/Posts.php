@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Posts
 {
+    public function __construct()
+    {
+        $this->likes = '';
+        $this->fecha_publicacion = new DateTime();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,7 +35,7 @@ class Posts
     private $likes;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $foto;
 
@@ -47,68 +54,80 @@ class Posts
      */
     private $comentarios;
 
-    public function getId(): ?int
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     */
+    private $user;
+
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getTitulo(): ?string
+    public function getTitulo()
     {
         return $this->titulo;
     }
 
-    public function setTitulo(string $titulo): self
+    public function setTitulo($titulo): void
     {
         $this->titulo = $titulo;
 
-        return $this;
     }
 
-    public function getLikes(): ?string
+    public function getLikes()
     {
         return $this->likes;
     }
 
-    public function setLikes(?string $likes): self
+    public function setLikes($likes): void
     {
         $this->likes = $likes;
 
-        return $this;
     }
 
-    public function getFoto(): ?string
+    public function getFoto()
     {
         return $this->foto;
     }
 
-    public function setFoto(string $foto): self
+    public function setFoto($foto): void
     {
         $this->foto = $foto;
 
-        return $this;
+    
     }
 
-    public function getFechaPublicacion(): ?\DateTimeInterface
+    public function getFechaPublicacion()
     {
         return $this->fecha_publicacion;
     }
 
-    public function setFechaPublicacion(\DateTimeInterface $fecha_publicacion): self
+    public function setFechaPublicacion($fecha_publicacion): void
     {
         $this->fecha_publicacion = $fecha_publicacion;
 
-        return $this;
     }
 
-    public function getContenido(): ?string
+    public function getContenido()
     {
         return $this->contenido;
     }
 
-    public function setContenido(string $contenido): self
+    public function setContenido($contenido): void
     {
         $this->contenido = $contenido;
 
-        return $this;
+    }
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): void
+    {
+        $this->user = $user;
+        
+     
     }
 }
