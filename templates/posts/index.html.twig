@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostsController!{% endblock %}
+{% block title %}{{ parent() }} - Crear posts{% endblock %}
 
 {% block body %}
+    {{ parent () }}
 
     {{ form(form) }}
 

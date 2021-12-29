@@ -1,1 +1,12 @@
-{{dump(posts)}}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Mis posts{% endblock %}
+
+{% block body %}
+    {{ parent () }}
+
+    {{dump(posts)}}
+
+{% endblock %}
+
+
