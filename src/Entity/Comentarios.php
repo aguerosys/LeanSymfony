@@ -32,10 +32,7 @@ class Comentarios
      */
     private $posts;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $fecha_publicacion;
+   
 
     public function getId(): ?int
     {
@@ -65,4 +62,35 @@ class Comentarios
 
         return $this;
     }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param mixed $posts
+     */
+    public function setPosts($posts): void
+    {
+        $this->posts = $posts;
+    }
+
 }
+
